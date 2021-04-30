@@ -18,3 +18,4 @@ profile.out
 /vndr.log
 /go.mod
 /vendor/modules.txt
+/tmp
