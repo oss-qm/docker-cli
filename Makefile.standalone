@@ -40,7 +40,8 @@ clean:
 	rm -Rf $(CURDIR)/vendor/modules.txt $(CURDIR)/go.mod $(CURDIR)/tmp
 
 install: compile
-	$(INSTALL) -D -m755 $(EXEC_OUT)                                   $(DESTDIR)/$(BINDIR)/$(EXEC_NAME)
+	$(INSTALL) -D -m755 $(EXEC_OUT)                       $(DESTDIR)/$(BINDIR)/$(EXEC_NAME)
 	$(LN_S) $(EXEC_NAME) $(DESTDIR)/$(BINDIR)/docker
+	$(INSTALL) -D -m644 ./contrib/completion/bash/docker  $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/docker
 
 .PHONY: all
