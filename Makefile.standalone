@@ -1,0 +1,42 @@
+
+## path configuration (FHS-style)
+PREFIX  ?= /usr
+BINDIR  ?= $(PREFIX)/bin
+DATADIR ?= $(PREFIX)/share
+MANDIR  ?= $(DATADIR)/man
+
+## toolchain commands
+export GO ?= go
+export LDFLAGS=-s -w
+
+all: compile
+
+PROGS=$(CURDIR)/docker
+
+compile: $(PROGS) man
+
+$(CURDIR)/go.mod: vendor.mod
+	cp $< $@
+
+$(CURDIR)/go.sum: vendor.sum
+	cp $< $@
+
+$(CURDIR)/docker: $(CURDIR)/go.mod $(CURDIR)/go.sum
+	$(GO) build -ldflags "$(LDFLAGS)" -mod=vendor -o $@ $(CURDIR)/cmd/docker
+
+$(CURDIR)/gen-manpages: $(CURDIR)/go.mod $(CURDIR)/go.sum
+	$(GO) build -tags manpages -o $@ ./man/generate.go
+
+man: $(CURDIR)/gen-manpages
+	mkdir -p $(CURDIR)/build/man
+	$(CURDIR)/gen-manpages --target $(CURDIR)/build/man
+
+clean:
+	rm -Rf $(CURDIR)/go.mod $(PROGS) $(CURDIR)/gen-manpages $(CURDIR)/go.mod $(CURDIR)/go.sum
+
+install: compile
+	install -m755 -D $(CURDIR)/docker                  $(DESTDIR)/$(BINDIR)/docker
+	install -m644 -D ./contrib/completion/bash/docker  $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/docker
+	install -m644 -D -t $(DESTDIR)/$(MANDIR)/man1 $(CURDIR)/build/man/*.1
+
+.PHONY: all
