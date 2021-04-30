@@ -1,0 +1,12 @@
+Source: docker-cli
+Section: admin
+Priority: optional
+Maintainer: Enrico Weigelt <info@metux.net>
+Build-Depends: debhelper (>=11~), golang-any (>=1.18~)
+Standards-Version: 4.1.4
+
+Package: docker-cli
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: Docker command line interface

@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+export GOFLAGS=-buildvcs=false
+
+## FIXME: manpages
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	dh_auto_build -- -f Makefile.standalone
+
+override_dh_auto_install:
+	dh_auto_install -- -f Makefile.standalone
+
+override_dh_auto_clean:
+	dh_auto_clean -- -f Makefile.standalone
+
+override_dh_auto_test:
+	: # do nothing
