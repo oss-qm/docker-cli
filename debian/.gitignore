@@ -1,0 +1,6 @@
+/.debhelper
+/debhelper-build-stamp
+/files
+*.log
+/docker-cli.substvars
+/docker-cli/
