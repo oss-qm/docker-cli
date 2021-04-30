@@ -51,9 +51,6 @@ override_dh_auto_build:
 override_dh_auto_install:
 	dh_auto_install -- -f Makefile.standalone
 
-override_dh_installinit:
-	dh_installinit --onlyscripts
-
 # debmake generated override targets
 # This is to speed up and avoid build failure for -j option
 # This should not be in debian/rules of the packaged source
