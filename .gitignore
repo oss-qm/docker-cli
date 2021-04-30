@@ -16,3 +16,5 @@ cli/winresources/rsrc_*.syso
 coverage.txt
 profile.out
 /vndr.log
+/go.mod
+/vendor/modules.txt
