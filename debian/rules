@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+export DH_VERBOSE = 1
+
+export GOVERSION=1.14
+export GO=/usr/lib/go-$(GOVERSION)/bin/go
+
+%:
+	dh $@ -- GO=$(GO)
+
+override_dh_auto_build:
+	dh_auto_build -- GO=$(GO) -f Makefile.standalone
+
+override_dh_auto_install:
+	dh_auto_install -- GO=$(GO) -f Makefile.standalone
+
+override_dh_auto_test:
+	: # do nothing
