@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+GO=${GO:-"go"}
+
 set -eu
 
 : "${CLI_DOCS_TOOL_VERSION=v0.5.1}"
@@ -21,12 +23,12 @@ trap clean EXIT
   ./scripts/vendor init
   # install cli-docs-tool and copy docs/tools.go in root folder
   # to be able to fetch the required depedencies
-  go mod edit -modfile=vendor.mod -require=github.com/docker/cli-docs-tool@${CLI_DOCS_TOOL_VERSION}
+  $GO mod edit -modfile=vendor.mod -require=github.com/docker/cli-docs-tool@${CLI_DOCS_TOOL_VERSION}
   cp docs/generate/tools.go .
   # update vendor
   ./scripts/vendor update
   # build docsgen
-  go build -mod=vendor -modfile=vendor.mod -tags docsgen -o /tmp/docsgen ./docs/generate/generate.go
+  $GO build -mod=vendor -modfile=vendor.mod -tags docsgen -o /tmp/docsgen ./docs/generate/generate.go
 )
 
 mkdir -p docs/yaml
