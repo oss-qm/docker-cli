@@ -9,6 +9,7 @@ PACKAGER_NAME ?=
 # expect to be run from a module.
 GO111MODULE=auto
 export GO111MODULE
+export GO ?= go
 
 all: binary
 
@@ -39,7 +40,7 @@ test-unit: ## run unit tests, to change the output format use: GOTESTSUM_FORMAT=
 .PHONY: test-coverage
 test-coverage: ## run test coverage
 	mkdir -p $(CURDIR)/build/coverage
-	gotestsum -- $(shell go list ./... | grep -vE '/vendor/|/e2e/') -coverprofile=$(CURDIR)/build/coverage/coverage.txt
+	gotestsum -- $(shell $(GO) list ./... | grep -vE '/vendor/|/e2e/') -coverprofile=$(CURDIR)/build/coverage/coverage.txt
 
 .PHONY: lint
 lint: ## run all the lint tools
@@ -54,7 +55,7 @@ fmt: ## run gofumpt (if present) or gofmt
 	@if command -v gofumpt > /dev/null; then \
 		gofumpt -w -d -lang=1.19 . ; \
 	else \
-		go list -f {{.Dir}} ./... | xargs gofmt -w -s -d ; \
+		$(GO) list -f {{.Dir}} ./... | xargs gofmt -w -s -d ; \
 	fi
 
 .PHONY: binary
