@@ -1,6 +1,6 @@
 
 ## path configuration (FHS-style)
-PREFIX  ?= /opt/docker
+PREFIX  ?= /usr
 BINDIR  ?= $(PREFIX)/bin
 SBINDIR ?= $(PREFIX)/sbin
 DATADIR ?= $(PREFIX)/share
