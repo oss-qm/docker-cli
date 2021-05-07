@@ -1,9 +1,10 @@
 
 ## path configuration (FHS-style)
-## FIXME !!!
-PREFIX ?= /opt/docker
-BINDIR ?= $(PREFIX)/bin
+PREFIX  ?= /opt/docker
+BINDIR  ?= $(PREFIX)/bin
 SBINDIR ?= $(PREFIX)/sbin
+DATADIR ?= $(PREFIX)/share
+MANDIR  ?= $(DATADIR)/man
 
 ## toolchain commands
 export GO ?= go
