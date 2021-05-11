@@ -25,7 +25,10 @@ EXEC_OUT=$(BUILD_OUT)/$(EXEC_NAME)
 
 all: compile
 
-compile: $(EXEC_OUT)
+compile: $(EXEC_OUT) man
+
+manpages:
+	./scripts/docs/generate-man.sh
 
 ## generate go.mod in order to use simpler module build mode
 $(CURDIR)/go.mod:
