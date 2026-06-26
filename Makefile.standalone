@@ -13,7 +13,12 @@ all: compile
 
 PROGS=$(CURDIR)/docker
 
-compile: $(PROGS) man
+## NOTE: manpages are intentionally not built here. Upstream generates them
+## from a *separate* go module (man/go.mod) whose tooling deps (spf13/cobra/doc,
+## cpuguy83/go-md2man) are deliberately NOT part of vendor.mod / the vendored
+## tree, so 'go build -tags manpages -mod=vendor ./man/generate.go' can never
+## resolve them. See the 'FIXME: manpages' note in debian/rules.
+compile: $(PROGS)
 
 $(CURDIR)/go.mod: vendor.mod
 	cp $< $@
@@ -37,6 +42,5 @@ clean:
 install: compile
 	install -m755 -D $(CURDIR)/docker                  $(DESTDIR)/$(BINDIR)/docker
 	install -m644 -D ./contrib/completion/bash/docker  $(DESTDIR)/$(PREFIX)/share/bash-completion/completions/docker
-	install -m644 -D -t $(DESTDIR)/$(MANDIR)/man1 $(CURDIR)/build/man/*.1
 
 .PHONY: all
